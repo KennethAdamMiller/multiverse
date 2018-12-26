@@ -1,6 +1,12 @@
 import capstone
 from disassembler import Disassembler
 
+def load_disasm_addrs():
+  addrs_file = open("addrs.txt", "r")
+  addrs = addrs_file.readlines()
+  addrs = { long(addr.split(":")[0],16) for addr in addrs }
+  return addrs
+
 class BruteForceDisassembler(Disassembler):
   ''' Brute-force disassembler that disassembles bytes
       from every offset; all possible code that could 
@@ -23,13 +29,16 @@ class BruteForceDisassembler(Disassembler):
     print 'Starting disassembly...'
     dummymap = {}
     ten_percent = len(bytes)/10
+    #load the output of the minimal superset disassembler,
+    #convert every address to capstone that is of that output
+    pcmsd_map = load_disasm_addrs()
     for instoff in range(0,len(bytes)):
       if instoff%ten_percent == 0:
         print 'Disassembly %d%% complete...'%((instoff/ten_percent)*10)
       while instoff < len(bytes):
         off = base+instoff
         try:
-          if not off in dummymap: #If this offset has not been disassembled
+          if not off in dummymap and off in pcmsd_map: #If this offset has not been disassembled
             insts = self.md.disasm(bytes[instoff:instoff+15],base+instoff)#longest x86/x64 instr is 15 bytes
             ins = insts.next() #May raise StopIteration
             instoff+=len(ins.bytes)
