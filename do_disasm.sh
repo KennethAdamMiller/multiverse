@@ -1,6 +1,6 @@
 collect_addrs() {
     f=${1}
-    superset_disasm --save_addrs --target=${f} --ground_truth=${f} 
+    superset_disasm --save_addrs --target=${f} --ground_truth_bin=${f} 
 }
 
 collect_addrs gcc_binutils_64_O0_addr2line
