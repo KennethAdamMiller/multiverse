@@ -1,15 +1,10 @@
 collect_addrs() {
     f=${1}
+    echo "Processing ${f}"
     superset_disasm --save_addrs --target=${f} --ground_truth_bin=${f} 
 }
 
-collect_addrs gcc_binutils_64_O0_addr2line
-collect_addrs gcc_binutils_64_O0_as-new
-collect_addrs gcc_binutils_64_O0_cxxfilt
-collect_addrs gcc_binutils_64_O0_objdump
-collect_addrs gcc_binutils_64_O0_size
-collect_addrs gcc_binutils_64_O0_strings
-collect_addrs gcc_binutils_64_O0_strip-new
+
 collect_addrs perlbench_base.amd64-m64-gcc41-nn
 collect_addrs gcc_base.amd64-m64-gcc41-nn
 collect_addrs bzip2_base.amd64-m64-gcc41-nn
