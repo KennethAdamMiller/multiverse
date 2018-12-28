@@ -220,8 +220,8 @@ class Rewriter(object):
             with open('newglobal','wb') as f2:
               f2.write(mapper.runtime.get_global_mapping_bytes())
           #print output
-          print mapping[base]
-          print mapping[base+1]
+          #print mapping[base]
+          #print mapping[base+1]
           maptext = mapper.write_mapping(mapping,base,len(bytes))
           cache = ''
           for x in maptext:
